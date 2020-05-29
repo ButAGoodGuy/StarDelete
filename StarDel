@@ -17,8 +17,8 @@ _______________________________
 Project:	StarDel
 Author:		Boohey
 V1.0	增加了模式101，删除头部、尾部*
-V1.1	增加了调试模式，直接输出0~7对应结果
-V1.2	增加了模式011，删除中部、尾部*
+V1.2	增加了调试模式，直接输出0~7对应结果
+V1.2.1  Debug模式下更改均基于原始字符串
 */
 
 
@@ -35,12 +35,21 @@ void StarDelHMT(char *a); //111
 
 void main()
 {
-	char  s[81] = ("***Boohey***likes***Gakki***");
+	char  s[50] = ("***Boohey***likes***Gakki***");
+	char  s0[50] = ("***Boohey***likes***Gakki***");
+	char  s1[50] = ("***Boohey***likes***Gakki***");
+	char  s2[50] = ("***Boohey***likes***Gakki***");
+	char  s3[50] = ("***Boohey***likes***Gakki***");
+	char  s4[50] = ("***Boohey***likes***Gakki***");
+	char  s5[50] = ("***Boohey***likes***Gakki***");
+	char  s6[50] = ("***Boohey***likes***Gakki***");
+	char  s7[50] = ("***Boohey***likes***Gakki***");
+	//char *s0 = s, *s1 = s, *s2 = s, *s3 = s, *s4 = s, *s5 = s, *s6 = s, *s7 = s;
 	int DebugMode = 1;//Debug Mode Enable
 	int ModeCode, DebugCode;
 
 	printf("The original string:\n%s\n", s);
-	
+
 	if (!DebugMode)
 	{
 		printf("Enter a string:\n");
@@ -54,14 +63,14 @@ void main()
 		{
 			switch (DebugCode)
 			{
-			case 0: printf("Mode 000:\n");		            puts(s); break;
-			case 1:	printf("Mode 001:\n");	StarDelT(s);	puts(s); break;
-			case 2:	printf("Mode 010:\n");	StarDelM(s);	puts(s); break;
-			case 3:	printf("Mode 011:\n");	StarDelMT(s);	puts(s); break;
-			case 4:	printf("Mode 100:\n");	StarDelH(s);	puts(s); break;
-			case 5:	printf("Mode 101:\n");	StarDelHT(s);	puts(s); break;
-			case 6:	printf("Mode 110:\n");	StarDelHM(s);	puts(s); break;
-			case 7:	printf("Mode 111:\n");	StarDelHMT(s);	puts(s); break;
+			case 0: printf("Mode 000:\n");		            puts(s0); break;
+			case 1:	printf("Mode 001:\n");	StarDelT(s1);	puts(s1); break;
+			case 2:	printf("To be debugged.Mode 010:\n");	StarDelM(s2);	puts(s2); break;
+			case 3:	printf("Mode 011:\n");	StarDelMT(s3);	puts(s3); break;
+			case 4:	printf("Mode 100:\n");	StarDelH(s4);	puts(s4); break;
+			case 5:	printf("Mode 101:\n");	StarDelHT(s5);	puts(s5); break;
+			case 6:	printf("To be debugged.Mode 110:\n");	StarDelHM(s6);	puts(s6); break;
+			case 7:	printf("To be debugged.Mode 111:\n");	StarDelHMT(s7);	puts(s7); break;
 			}
 		}
 	}
@@ -107,6 +116,17 @@ void NONO()
 */
 void StarDelT(char *a)   //001
 {
+		/*遍历，指针a指向\0也即*/
+	while (*a != '\0')
+		a++;
+	/*指针a指向最后一个字母*/
+	a--;
+	/*指针a指向为*时指针a--，
+	直至遇到字母也即非*为止*/
+	while (*a == '*')
+		a--;
+	/*字符串后移一位，加上结束标志符*/
+	*(a + 1) = '\0';
 }
 /*
 二进制	十进制	操作说明
@@ -222,6 +242,7 @@ void StarDelHM(char *a)
 */
 void StarDelHMT(char *a) //111
 {
+
 }
 
 
