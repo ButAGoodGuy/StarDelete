@@ -1,0 +1,195 @@
+/*操作指令
+删除字符串中*号，0表示不改变，1表示执行删除
+xyz分别表示对头部Head、中间Mid、尾部Tail执行的操作
+_______________________________
+二进制	十进制	操作说明
+000		0		不删除任何*
+001     1		删除尾部*
+010		2		删除中间*
+011     3       删除中间、尾部*
+100		4		删除头部*
+101     5       删除头部、尾部*
+110     6       删除头部、中间*
+111     7       删除所有*
+*/
+
+/*
+Project:	StarDel
+Author:		Boohey
+V1.0	增加了模式101，删除头部、尾部*
+
+*/
+
+
+#include <stdio.h>
+
+void NONO();
+void StarDelT(char *a);   //001
+void StarDelM(char *a);   //010
+void StarDelMT(char *a);  //011
+void StarDelH(char *a);   //100
+void StarDelHT(char *a);  //101
+void StarDelHM(char *a);  //110
+void StarDelHMT(char *a); //111
+
+void main()
+{
+   char  s[81] = ("***Boohey***likes***Gakki***");
+   int ModeCode;
+   int DebugMode = 1;//Debug Mode Enable
+   printf("The original string:\n%s\n", s);
+   //printf("Enter a string:\n");
+   //gets(s);
+   if (DebugMode)
+   {
+
+   }
+   scanf("%d", &ModeCode);
+   switch (ModeCode)
+   {
+   case 0:
+	   break;
+   case 1:
+	   StarDelT(s);
+	   break;
+   case 2:
+	   StarDelM(s);
+	   break;
+   case 3:
+	   StarDelMT(s);
+	   break;
+   case 4:
+	   StarDelH(s);
+	   break;
+   case 5:
+	   StarDelHT(s);
+	   break;
+   case 6:
+	   StarDelHM(s);
+	   break;
+   case 7:
+	   StarDelHMT(s);
+	   break;
+   default:
+	   printf("Wrong StarDelete ModeCode!\n");
+	   break;
+   }
+ 
+   printf("The string after deleted:\n");
+   puts(s);
+   //NONO();
+}
+void NONO ()
+{/* 本函数用于打开文件，输入数据，调用函数，输出数据，关闭文件。 */
+  FILE *in, *out ;
+  int i ; char s[81] ;
+  in = fopen("in.dat","r") ;
+  out = fopen("out.dat","w") ;
+  for(i = 0 ; i < 10 ; i++) {
+    fscanf(in, "%s", s) ;
+	//StarDelHT(s) ;
+    fprintf(out, "%s\n", s) ;    
+  }
+  fclose(in) ;
+  fclose(out) ;
+}
+
+/*
+二进制	十进制	操作说明
+001     1		删除尾部 *
+*/
+void StarDelT(char *a)   //001
+{
+}
+/*
+二进制	十进制	操作说明
+010		2		删除中间 *
+*/
+void StarDelM(char *a)   //010
+{
+}
+/*
+二进制	十进制	操作说明
+011     3       删除中间、尾部 *
+*/
+void StarDelMT(char *a)  //011
+{
+}
+/*
+二进制	十进制	操作说明
+100		4		删除头部 *
+*/
+void StarDelH(char *a)
+{
+	int i = 0;
+	/*定义临时指针P,初始指向原串首地址*/
+	char *p = a;
+	/*遍历，直至找到第一个字母*/
+	while (*p && (*p == '*'))
+		p++;
+
+	/*继续移动指针，字符拷贝到原串
+	直至遇到结束字符\0*/
+	while (*p)
+	{
+		if (*p != '\0')
+		{
+			a[i] = *p;
+			i++;
+		}
+		p++;
+	}
+}
+/*
+二进制	十进制	操作说明
+101     5       删除头部、尾部 *
+*/
+void StarDelHT(char *a)  
+{
+	char *t = a;
+	/*遍历，指针a指向\0也即*/
+	while (*t != '\0')//while(*t)
+		t++;
+	/*指针a指向最后一个字母*/
+	t--;
+	/*指针a指向为*时指针a--，
+	直至遇到字母也即非*为止.
+	指针t指向字符串中最后字符*/
+	while (*t == '*')
+		t--;
+	/*字符串后移一位，加上结束标志符*/
+	*(t + 1) = '\0';
+
+	int i = 0;
+	/*定义临时指针P,初始指向原串首地址*/
+	char *p = a;
+	/*遍历，直至找到第一个字母.
+	指针f指向字符串中第一个字符*/
+	while (*p == '*')
+		p++;
+	/*继续移动指针，字符拷贝到原串
+	直至遇到结束字符\0*/
+	while (*p)
+	{
+		if (*p != '\0')
+		{
+			a[i] = *p;
+			i++;
+		}
+		p++;
+	}
+}
+/*
+二进制	十进制	操作说明
+110     6       删除头部、中间 *
+*/
+void StarDelHM(char *a)
+{
+}
+/*
+二进制	十进制	操作说明
+111     7       删除所有*
+*/
+void StarDelHMT(char *a) //111
+{
+}
