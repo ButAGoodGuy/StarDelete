@@ -17,7 +17,7 @@ _______________________________
 Project:	StarDel
 Author:		Boohey
 V1.0	增加了模式101，删除头部、尾部*
-
+V1.2	增加了调试模式，直接输出0~7对应结果
 */
 
 
@@ -34,64 +34,70 @@ void StarDelHMT(char *a); //111
 
 void main()
 {
-   char  s[81] = ("***Boohey***likes***Gakki***");
-   int ModeCode;
-   int DebugMode = 1;//Debug Mode Enable
-   printf("The original string:\n%s\n", s);
-   //printf("Enter a string:\n");
-   //gets(s);
-   if (DebugMode)
-   {
+	char  s[81] = ("***Boohey***likes***Gakki***");
+	int DebugMode = 1;//Debug Mode Enable
+	int ModeCode, DebugCode;
 
-   }
-   scanf("%d", &ModeCode);
-   switch (ModeCode)
-   {
-   case 0:
-	   break;
-   case 1:
-	   StarDelT(s);
-	   break;
-   case 2:
-	   StarDelM(s);
-	   break;
-   case 3:
-	   StarDelMT(s);
-	   break;
-   case 4:
-	   StarDelH(s);
-	   break;
-   case 5:
-	   StarDelHT(s);
-	   break;
-   case 6:
-	   StarDelHM(s);
-	   break;
-   case 7:
-	   StarDelHMT(s);
-	   break;
-   default:
-	   printf("Wrong StarDelete ModeCode!\n");
-	   break;
-   }
- 
-   printf("The string after deleted:\n");
-   puts(s);
-   //NONO();
+	printf("The original string:\n%s\n", s);
+	
+	if (!DebugMode)
+	{
+		printf("Enter a string:\n");
+		gets(s);
+	}
+
+	printf("The string after deleted:\n");
+	if (DebugMode)
+	{
+		for (DebugCode = 0; DebugCode < 8; DebugCode++)
+		{
+			switch (DebugCode)
+			{
+			case 0: printf("Mode 000:\n");		            puts(s); break;
+			case 1:	printf("Mode 001:\n");	StarDelT(s);	puts(s); break;
+			case 2:	printf("Mode 010:\n");	StarDelM(s);	puts(s); break;
+			case 3:	printf("Mode 011:\n");	StarDelMT(s);	puts(s); break;
+			case 4:	printf("Mode 100:\n");	StarDelH(s);	puts(s); break;
+			case 5:	printf("Mode 101:\n");	StarDelHT(s);	puts(s); break;
+			case 6:	printf("Mode 110:\n");	StarDelHM(s);	puts(s); break;
+			case 7:	printf("Mode 111:\n");	StarDelHMT(s);	puts(s); break;
+			}
+		}
+	}
+	else
+	{
+		scanf("%d", &ModeCode);
+
+		switch (ModeCode)
+		{
+		case 0:                 break;
+		case 1: StarDelT(s);	break;
+		case 2: StarDelM(s);	break;
+		case 3: StarDelMT(s);	break;
+		case 4: StarDelH(s);	break;
+		case 5: StarDelHT(s);   break;
+		case 6: StarDelHM(s);   break;
+		case 7: StarDelHMT(s);  break;
+		default: printf("Wrong StarDelete ModeCode!\n");
+		}
+		printf("The string after deleted:\n");
+		puts(s);
+	}
+	//NONO();
 }
-void NONO ()
+void NONO()
 {/* 本函数用于打开文件，输入数据，调用函数，输出数据，关闭文件。 */
-  FILE *in, *out ;
-  int i ; char s[81] ;
-  in = fopen("in.dat","r") ;
-  out = fopen("out.dat","w") ;
-  for(i = 0 ; i < 10 ; i++) {
-    fscanf(in, "%s", s) ;
-	//StarDelHT(s) ;
-    fprintf(out, "%s\n", s) ;    
-  }
-  fclose(in) ;
-  fclose(out) ;
+	FILE *in, *out;
+	int i; char s[81];
+	in = fopen("in.dat", "r");
+	out = fopen("out.dat", "w");
+	for (i = 0; i < 10; i++) {
+		fscanf(in, "%s", s);
+		//StarDelHT(s) ;
+		fprintf(out, "%s\n", s);
+	}
+	fclose(in);
+	fclose(out);
 }
 
 /*
@@ -144,7 +150,7 @@ void StarDelH(char *a)
 二进制	十进制	操作说明
 101     5       删除头部、尾部 *
 */
-void StarDelHT(char *a)  
+void StarDelHT(char *a)
 {
 	char *t = a;
 	/*遍历，指针a指向\0也即*/
@@ -193,3 +199,6 @@ void StarDelHM(char *a)
 void StarDelHMT(char *a) //111
 {
 }
+
+
+
