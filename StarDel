@@ -23,6 +23,7 @@ V1.3    增加了模式111，删除全部*；
 V1.3.1  修复了V1.3模式111，结尾出现乱码的问题；
 V1.3.1.1模式111对应函数冗余代码删除；
 V1.4	增加了模式010，删除中部*
+V1.5	增加了模式010，删除头部、中部*
 */
 
 
@@ -73,7 +74,7 @@ void main()
 			case 3:	printf("Mode 011:\n");	StarDelMT(s3);	puts(s3); break;
 			case 4:	printf("Mode 100:\n");	StarDelH(s4);	puts(s4); break;
 			case 5:	printf("Mode 101:\n");	StarDelHT(s5);	puts(s5); break;
-			case 6:	printf("To be debugged.Mode 110:\n");	StarDelHM(s6);	puts(s6); break;
+			case 6:	printf("Mode 110:\n");	StarDelHM(s6);	puts(s6); break;
 			case 7:	printf("Mode 111:\n");	StarDelHMT(s7);	puts(s7); break;
 			}
 		}
@@ -261,6 +262,38 @@ void StarDelHT(char *a)
 */
 void StarDelHM(char *a)
 {
+/*
+二进制	十进制	操作说明
+110     6       删除头部、中间 *
+*/
+void StarDelHM(char *a)
+{
+	int i = 0, j = 0;
+	char *p, *t;
+	p = t = a;
+
+	while (*t)
+		t++;
+	t--;  /*将指针t定位到字符串中最后一个字符*/
+	while (*t == '*')  /*指针t指向字符串中最后一个字符*/
+		t--;
+
+	/*移动指针，字符拷贝到原串，
+	遇到*跳过*/
+	while (p<t)
+	{
+		if (*p != '*')
+		{
+			*(a + i) = *p;
+			i++;
+		}
+		p++;
+	}
+	/*将指针t至字符串尾部的所有字符前移*/
+	for (j = 0; *(t + j); i++, j++)
+		*(a + i) = *(t + j);
+	*(a + i) = '\0';  /*在字符串尾部添加结束标志*/
+}
 }
 /*
 二进制	十进制	操作说明
