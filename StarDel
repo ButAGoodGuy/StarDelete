@@ -22,6 +22,7 @@ V1.2.1  Debug模式下更改均基于原始字符串；
 V1.3    增加了模式111，删除全部*；
 V1.3.1  修复了V1.3模式111，结尾出现乱码的问题；
 V1.3.1.1模式111对应函数冗余代码删除；
+V1.4	增加了模式010，删除中部*
 */
 
 
@@ -68,12 +69,12 @@ void main()
 			{
 			case 0: printf("Mode 000:\n");		            puts(s0); break;
 			case 1:	printf("Mode 001:\n");	StarDelT(s1);	puts(s1); break;
-			case 2:	printf("To be debugged.Mode 010:\n");	StarDelM(s2);	puts(s2); break;
+			case 2:	printf("Mode 010:\n");	StarDelM(s2);	puts(s2); break;
 			case 3:	printf("Mode 011:\n");	StarDelMT(s3);	puts(s3); break;
 			case 4:	printf("Mode 100:\n");	StarDelH(s4);	puts(s4); break;
 			case 5:	printf("Mode 101:\n");	StarDelHT(s5);	puts(s5); break;
 			case 6:	printf("To be debugged.Mode 110:\n");	StarDelHM(s6);	puts(s6); break;
-			case 7:	printf("To be debugged.Mode 111:\n");	StarDelHMT(s7);	puts(s7); break;
+			case 7:	printf("Mode 111:\n");	StarDelHMT(s7);	puts(s7); break;
 			}
 		}
 	}
@@ -137,6 +138,28 @@ void StarDelT(char *a)   //001
 */
 void StarDelM(char *a)   //010
 {
+	char *f, *t;
+	f = t = a;
+	while (*t)
+		t++;
+	t--;  /*将指针t定位到字符串中最后一个字符*/
+	while (*t == '*')  /*指针t指向字符串中最后一个字符*/
+		t--;
+	while (*f == '*')  /*指针f指向字符串中第一个字符*/
+		f++;
+
+	int i, j;
+		/*删除指针f与t之间的所有“*”*/
+	for (i = 0,j = 0; f + i < t; i++)
+		if (*(f + i) != '*')
+		{
+			*(f + j) = *(f + i);//
+			j++;
+		}
+	/*将指针t至字符串尾部的所有字符前移*/
+	for (i = 0; *(t + i); i++, j++)
+		*(f + j) = *(t + i);
+	*(f + j) = '\0';  /*在字符串尾部添加结束标志*/
 }
 /*
 二进制	十进制	操作说明
