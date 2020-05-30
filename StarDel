@@ -24,6 +24,7 @@ V1.3.1  修复了V1.3模式111，结尾出现乱码的问题；
 V1.3.1.1模式111对应函数冗余代码删除；
 V1.4	增加了模式010，删除中部*
 V1.5	增加了模式010，删除头部、中部*
+V1.6 	
 */
 
 
@@ -40,7 +41,7 @@ void StarDelHMT(char *a); //111
 
 void main()
 {
-	char  s[50] = ("***Boohey***likes***Gakki***");
+	char  s[50];
 	char  s0[50] = ("***Boohey***likes***Gakki***");
 	char  s1[50] = ("***Boohey***likes***Gakki***");
 	char  s2[50] = ("***Boohey***likes***Gakki***");
@@ -50,10 +51,10 @@ void main()
 	char  s6[50] = ("***Boohey***likes***Gakki***");
 	char  s7[50] = ("***Boohey***likes***Gakki***");
 	//char *s0 = s, *s1 = s, *s2 = s, *s3 = s, *s4 = s, *s5 = s, *s6 = s, *s7 = s;
-	int DebugMode = 1;//Debug Mode Enable
+	int DebugMode = 0;//Debug Mode Enable
 	int ModeCode, DebugCode;
 
-	printf("The original string:\n%s\n", s);
+	printf("The original string:\n%s\n", s0);
 
 	if (!DebugMode)
 	{
