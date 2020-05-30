@@ -2,7 +2,7 @@
 删除字符串中*号，0表示不改变，1表示执行删除
 xyz分别表示对头部Head、中间Mid、尾部Tail执行的操作
 _______________________________
-二进制	十进制	操作说明
+Binary	Decimal	Command
 000		0	不删除任何*
 001     1	删除尾部*
 010		2	删除中间*
@@ -14,17 +14,19 @@ _______________________________
 */
 
 /*
-Project:	StarDel
+Project:	Stars in String  Deletation System
 Author:		Boohey
-V1.0	增加了模式101，删除头部、尾部*；
+Version:	V1.6
+Date:		May 30,2020
+V1.0	增加了模式101，删除头部、尾部；
 V1.2	增加了调试模式，直接输出0~7对应结果；
 V1.2.1  Debug模式下更改均基于原始字符串；
 V1.3    增加了模式111，删除全部*；
 V1.3.1  修复了V1.3模式111，结尾出现乱码的问题；
 V1.3.1.1模式111对应函数冗余代码删除；
 V1.4	增加了模式010，删除中部*
-V1.5	增加了模式010，删除头部、中部*
-V1.6 	
+V1.5	增加了模式010，删除头部、中部*;
+V1.6	操作界面美化;
 */
 
 
@@ -51,10 +53,26 @@ void main()
 	char  s6[50] = ("***Boohey***likes***Gakki***");
 	char  s7[50] = ("***Boohey***likes***Gakki***");
 	//char *s0 = s, *s1 = s, *s2 = s, *s3 = s, *s4 = s, *s5 = s, *s6 = s, *s7 = s;
-	int DebugMode = 0;//Debug Mode Enable
+	int DebugMode = 0;//Debug Mode:0 Select Mode:1
 	int ModeCode, DebugCode;
 
-	printf("The original string:\n%s\n", s0);
+	printf("\t\t\tStars in String  Deletation System\n\
+			\tINSTRUCTION!\n\
+			\t\t\t\tAuthor:Boohey\n\
+			\t\t\t\tVersion:V1.6\n\
+			\t\t\t\tDate:May 30,2020\n\
+			*******************************\n\
+			Delete part:Head-H\tMiddle-M\tTail-T\n\
+			Binary\tDecimal\tCommand\n\
+			000\t0\tNo operation\n\
+			001\t1\tT\n\
+			010\t2\tM\n\
+			011\t3\tMT\n\
+			100\t4\tH\n\
+			101\t5\tHT\n\
+			110\t6\tHM\n\
+			111\t7\tHMT\n\
+			*******************************\n\n");
 
 	if (!DebugMode)
 	{
@@ -62,9 +80,10 @@ void main()
 		gets(s);
 	}
 
-	printf("The string after deleted:\n");
 	if (DebugMode)
 	{
+		printf("The original string:\n%s\n", s0);
+		printf("The string after deleted:\n");
 		for (DebugCode = 0; DebugCode < 8; DebugCode++)
 		{
 			switch (DebugCode)
@@ -82,6 +101,7 @@ void main()
 	}
 	else
 	{
+		printf("Enter ModeCode(0~7):\n");
 		scanf("%d", &ModeCode);
 
 		switch (ModeCode)
@@ -94,9 +114,9 @@ void main()
 		case 5: StarDelHT(s);   break;
 		case 6: StarDelHM(s);   break;
 		case 7: StarDelHMT(s);  break;
-		default: printf("Wrong StarDelete ModeCode!\n");
+		default: printf("Wrong ModeCode!\n"); 
 		}
-		printf("The string after deleted:\n");
+		printf("The string after %d operation:\n", ModeCode);
 		puts(s);
 	}
 	//NONO();
@@ -122,7 +142,7 @@ void NONO()
 */
 void StarDelT(char *a)   //001
 {
-		/*遍历，指针a指向\0也即*/
+	/*遍历，指针a指向\0也即*/
 	while (*a != '\0')
 		a++;
 	/*指针a指向最后一个字母*/
@@ -151,8 +171,8 @@ void StarDelM(char *a)   //010
 		f++;
 
 	int i, j;
-		/*删除指针f与t之间的所有“*”*/
-	for (i = 0,j = 0; f + i < t; i++)
+	/*删除指针f与t之间的所有“*”*/
+	for (i = 0, j = 0; f + i < t; i++)
 		if (*(f + i) != '*')
 		{
 			*(f + j) = *(f + i);//
@@ -263,12 +283,6 @@ void StarDelHT(char *a)
 */
 void StarDelHM(char *a)
 {
-/*
-二进制	十进制	操作说明
-110     6       删除头部、中间 *
-*/
-void StarDelHM(char *a)
-{
 	int i = 0, j = 0;
 	char *p, *t;
 	p = t = a;
@@ -295,7 +309,6 @@ void StarDelHM(char *a)
 		*(a + i) = *(t + j);
 	*(a + i) = '\0';  /*在字符串尾部添加结束标志*/
 }
-}
 /*
 二进制	十进制	操作说明
 111     7       删除所有*
@@ -319,6 +332,3 @@ void StarDelHMT(char *a) //111
 	}
 	a[i] = '\0';
 }
-
-
-
